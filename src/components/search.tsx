@@ -23,7 +23,7 @@ export function Search() {
     } else {
       params.delete("search");
     }
-    replace(`search/${pathname}?${params.toString()}`);
+    replace(`/search?${params.toString()}`);
   };
 
   return (
