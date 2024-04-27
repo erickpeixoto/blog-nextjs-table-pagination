@@ -1,5 +1,7 @@
 "use server";
 
+import { User } from "@/lib/schemas/user";
+
 export async function getUsers(search: string) {
   if (search) {
     return searchUsers(search);
@@ -31,4 +33,16 @@ export async function searchUsers(param: string) {
     },
   ];
   return Promise.resolve(mock);
+}
+
+export async function saveUser(user: User) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+
+  return response.json();
 }
