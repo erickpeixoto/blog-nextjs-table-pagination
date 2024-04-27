@@ -47,7 +47,7 @@ export const columns: ColumnDef<User>[] = [
           {new Intl.DateTimeFormat("en-US", {
             dateStyle: "medium",
             timeStyle: "short",
-          }).format(new Date(user.created_at))}
+          }).format(new Date(user.created_at ?? 0))}
         </>
       );
     },
@@ -55,7 +55,7 @@ export const columns: ColumnDef<User>[] = [
   {
     header: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const user = row.original;
 
       return (
         <DropdownMenu>
@@ -68,7 +68,7 @@ export const columns: ColumnDef<User>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(user.id!)}
             >
               Copy payment ID
             </DropdownMenuItem>

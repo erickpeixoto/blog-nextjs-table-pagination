@@ -1,3 +1,5 @@
+import { UserForm } from "@/components/users/form";
+
 export default function User() {
-  return <div>Form New User</div>;
+  return <UserForm />;
 }

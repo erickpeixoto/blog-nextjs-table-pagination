@@ -1,5 +1,4 @@
 import { getUsers } from "@/actions/user";
-import { NavBar } from "@/components/nav-bar";
 import { List } from "@/components/users/list";
 import { unstable_noStore as noStore } from 'next/cache';
 
@@ -18,14 +17,13 @@ export default async function Page({
   const queryClient = new QueryClient({});
   await queryClient.prefetchQuery({
     queryKey: ["users"],
-    queryFn: () => getUsers(searchParams.search as string),
-    staleTime: 1000,
+    queryFn: () => getUsers(searchParams.search as string)
+
     
   });
   return (
     <div className="w-full px-10">
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <NavBar />
         <List />
       </HydrationBoundary>
     </div>

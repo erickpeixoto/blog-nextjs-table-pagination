@@ -1,11 +1,19 @@
 import { z } from "zod";
 
 export const UserSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  email: z.string().email(),
-  avatar: z.string().url(),
-  created_at: z.string().transform((date) => new Date(date)),
+  id: z.string().optional(),
+  name: z.string({
+    message: "Name must be a string",
+  }).min(3),
+  email: z.string({
+    message: "Email must be a string",
+  }).email({
+    message: "Email must be a valid email",
+  }),
+  avatar: z.string().url({
+    message: "Avatar must be a valid URL",
+  }).optional(),
+  created_at: z.string().transform((date) => new Date(date)).optional(),
 });
 
 export const UserSearchSchema = z.object({

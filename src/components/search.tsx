@@ -6,24 +6,24 @@ import { UserSearch, UserSearchSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export function Search() {
-  const { register, handleSubmit } = useForm<UserSearch>({
+  const { register, handleSubmit, reset } = useForm<UserSearch>({
     resolver: zodResolver(UserSearchSchema),
   });
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const { replace } = useRouter();
+  const params = new URLSearchParams(searchParams);
 
   const handleSearch = (data: UserSearch) => {
-    const params = new URLSearchParams(searchParams);
     if (data.param) {
       params.set("search", data.param);
     } else {
       params.delete("search");
     }
     replace(`/search?${params.toString()}`);
+    reset();
   };
 
   return (
@@ -31,7 +31,7 @@ export function Search() {
       <form className="flex gap-2" onSubmit={handleSubmit(handleSearch)}>
         <Input
           type="text"
-          placeholder="Search"
+          placeholder={params.get("search") || "Search"}
           className="search"
           {...register("param")}
         />
