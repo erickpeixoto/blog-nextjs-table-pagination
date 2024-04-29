@@ -46,3 +46,14 @@ export async function saveUser(user: User) {
 
   return response.json();
 }
+
+export async function deleteUser(id: string) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  return response.json();
+}
